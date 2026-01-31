@@ -1,0 +1,9 @@
+---
+docker_users:
+  - wasylews
+
+services_dir: /home/wasylews/services
+
+docker_install_compose_plugin: true
+docker_service_state: started
+docker_service_enabled: true

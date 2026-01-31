@@ -1,0 +1,39 @@
+---
+- name: Bootstrap Raspberry Pi and deploy services
+  hosts: all
+  become: true
+
+  vars:
+    pip_package: python-pip
+    pip_install_packages:
+      - name: docker
+
+  roles:
+    - geerlingguy.docker
+    - geerlingguy.pip
+
+  tasks:
+    - name: Ensure services directory exists
+      ansible.builtin.file:
+        path: "{{ services_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Copy services to host
+      ansible.builtin.copy:
+        src: services/
+        dest: "{{ services_dir }}/"
+        mode: preserve
+
+    - name: Find docker-compose files
+      ansible.builtin.find:
+        paths: "{{ services_dir }}"
+        patterns: docker-compose.yml
+        recurse: true
+      register: compose_files
+
+    - name: Deploy all services
+      community.docker.docker_compose_v2:
+        project_src: "{{ item.path | dirname }}"
+        state: present
+      loop: "{{ compose_files.files }}"
