@@ -1,11 +1,21 @@
+ENVS := dev prod
+
+# Default to dev if no environment is specified
+ENV ?= dev
+
+# Ensure the specified environment is valid
+ifeq ($(filter $(ENV),$(ENVS)),)
+$(error Invalid environment. Must be one of: $(ENVS))
+endif
+
 deploy:
-	ansible-playbook deploy.yml --ask-become-pass --vault-password-file .vault-pass
+	ansible-playbook deploy.yml -i inventories/$(ENV).yml \
+		--vault-password-file .vault-pass
+
+clean:
+	ansible-playbook cleanup.yml -i inventories/$(ENV).yml
 
 deps:
 	ansible-galaxy install -r requirements.yml
 
-clean:
-	ansible-playbook cleanup.yml
-
-
-@.PHONY: deploy clean deps
+.PHONY: deploy clean deps
