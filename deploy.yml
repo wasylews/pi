@@ -17,6 +17,7 @@
     PGID: "{{ pgid }}"
     LIBRARY_DIR: "{{ library_dir }}"
     DOWNLOADS_DIR: "{{ downloads_dir }}"
+    CONFIG_DIR: "{{ config_dir }}"
 
     DB_USER: "{{ booklore_db_user }}"
     DB_PASSWORD: "{{ vault_db_password }}"
@@ -30,7 +31,7 @@
     APP_GROUP_ID: "{{ pgid }}"
     
     DB_USER_ID: "{{ puid }}"
-    DB_GROUP_ID: "{{ puid }}"
+    DB_GROUP_ID: "{{ pgid }}"
     DATABASE_URL: "jdbc:mariadb://mariadb:3306/{{ booklore_mysql_database }}"
 
     SHELFMARK_PORT: "{{ shelfmark_port }}"
@@ -63,6 +64,11 @@
         path: "{{ services_dir }}"
         state: directory
         mode: "0755"
+
+    - name: Create books network
+      community.docker.docker_network:
+        name: books
+        state: present
 
     - name: Copy services to host
       ansible.builtin.copy:

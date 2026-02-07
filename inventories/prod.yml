@@ -7,3 +7,4 @@ all:
         services_dir: /home/wasylews/services
         library_dir: /home/wasylews/library
         downloads_dir: /home/wasylews/bookdrop
+        config_dir: /home/wasylews/services/config

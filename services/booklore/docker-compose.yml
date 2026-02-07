@@ -39,7 +39,7 @@ services:
       - MYSQL_USER=${DB_USER}
       - MYSQL_PASSWORD=${DB_PASSWORD}
     volumes:
-      - ${LIBRARY_DIR}/mariadb/config:/config
+      - ${CONFIG_DIR}/mariadb:/config
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
