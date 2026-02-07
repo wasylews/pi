@@ -1,0 +1,15 @@
+- name: Cleanup Docker containers
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Get running containers
+      community.docker.docker_host_info:
+        containers: true
+      register: running_containers
+
+    - name: Stop all containers
+      community.docker.docker_container:
+        name: "{{ item.Names[0] }}"
+        state: stopped
+      loop: "{{ running_containers.containers }}"

@@ -1,8 +1,6 @@
 services:
   booklore:
     image: booklore/booklore:latest
-    # Alternative: Use GitHub Container Registry
-    # image: ghcr.io/booklore-app/booklore:latest
     container_name: booklore
     environment:
       - USER_ID=${APP_USER_ID}
@@ -19,8 +17,8 @@ services:
       - "${BOOKLORE_PORT}:${BOOKLORE_PORT}"
     volumes:
       - ./data:/app/data
-      - ./books:/books
-      - ./bookdrop:/bookdrop
+      - ${LIBRARY_DIR}:/books
+      - ${DOWNLOADS_DIR}:/bookdrop
     healthcheck:
       test: wget -q -O - http://localhost:${BOOKLORE_PORT}/api/v1/healthcheck
       interval: 60s
@@ -41,10 +39,10 @@ services:
       - MYSQL_USER=${DB_USER}
       - MYSQL_PASSWORD=${DB_PASSWORD}
     volumes:
-      - ./mariadb/config:/config
+      - ${LIBRARY_DIR}/mariadb/config:/config
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "mariadb-admin", "ping", "-h", "localhost" ]
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
       interval: 5s
       timeout: 5s
       retries: 10

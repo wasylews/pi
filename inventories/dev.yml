@@ -4,3 +4,7 @@ all:
       hosts:
         localhost:
           ansible_connection: local
+      vars:
+        library_dir: "{{ playbook_dir }}/build/library"
+        downloads_dir: "{{ playbook_dir }}/build/bookdrop"
+        services_dir: "{{ playbook_dir }}/build/services"

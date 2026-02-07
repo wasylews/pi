@@ -1,0 +1,18 @@
+services:
+  shelfmark:
+    image: ghcr.io/calibrain/shelfmark:latest
+    container_name: shelfmark
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      DOCKERMODE: true
+      CALIBRE_WEB_URL: "http://localhost:${BOOKLORE_PORT}"
+      ONBOARDING: false
+    ports:
+      - ${SHELFMARK_PORT}:${SHELFMARK_PORT}
+    restart: unless-stopped
+    volumes:
+      - ${DOWNLOADS_DIR}:/books # Default destination for book downloads
+      - ./config/:/config # App configuration
+      # Required for torrent / usenet - path must match your download client's volume exactly
+      - ${DOWNLOADS_DIR}:/downloads
