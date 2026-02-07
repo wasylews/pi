@@ -1,0 +1,49 @@
+---
+- name: Ensure shelfmark config dir exists
+  ansible.builtin.file:
+    path: "{{ config_dir }}/shelfmark"
+    state: directory
+    owner: "{{ puid }}"
+    group: "{{ pgid }}"
+    mode: "0755"
+
+- name: Ensure shelfmark service dir exists
+  ansible.builtin.file:
+    path: "{{ services_dir }}/shelfmark"
+    state: directory
+    mode: "0755"
+
+- name: Render shelfmark non-secret env file
+  ansible.builtin.template:
+    src: templates/shelfmark.env.j2
+    dest: "{{ services_dir }}/shelfmark/.env"
+    owner: "{{ puid }}"
+    group: "{{ pgid }}"
+    mode: "0640"
+  tags: env
+
+- name: Start shelfmark container
+  community.docker.docker_container:
+    name: "{{ shelfmark_container_name }}"
+    image: "{{ shelfmark_image }}"
+    env_file: "{{ services_dir }}/shelfmark/.env"
+    ports:
+      - "{{ shelfmark_port }}:{{ shelfmark_port }}"
+    networks:
+      - name: books
+    restart_policy: unless-stopped
+    volumes:
+      - "{{ downloads_dir }}:/books"
+      - "{{ config_dir }}/shelfmark:/config"
+      - "{{ downloads_dir }}:/downloads"
+    state: started
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -fsS http://localhost:{{ shelfmark_port }}/api/health || exit 1",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 6
+      start_period: 30s

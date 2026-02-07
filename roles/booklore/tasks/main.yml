@@ -1,0 +1,53 @@
+---
+- name: Ensure booklore data dir exists
+  ansible.builtin.file:
+    path: "{{ services_dir }}/booklore/data"
+    state: directory
+    owner: "{{ puid }}"
+    group: "{{ pgid }}"
+    mode: "0755"
+
+- name: Ensure booklore service dir exists
+  ansible.builtin.file:
+    path: "{{ services_dir }}/booklore"
+    state: directory
+    mode: "0755"
+
+- name: Render booklore non-secret env file
+  ansible.builtin.template:
+    src: templates/booklore.env.j2
+    dest: "{{ services_dir }}/booklore/.env"
+    owner: "{{ puid }}"
+    group: "{{ pgid }}"
+    mode: "0640"
+  tags: env
+
+- name: Start booklore container
+  community.docker.docker_container:
+    name: "{{ booklore_container_name }}"
+    image: "{{ booklore_image }}"
+    env_file: "{{ services_dir }}/booklore/.env"
+    env:
+      DATABASE_USERNAME: "{{ booklore_db_user | string }}"
+      DATABASE_PASSWORD: "{{ vault_db_password | string }}"
+    networks:
+      - name: books
+    volumes:
+      - "{{ services_dir }}/booklore/data:/app/data"
+      - "{{ library_dir }}:/books"
+      - "{{ downloads_dir }}:/bookdrop"
+    ports:
+      - "{{ booklore_port }}:{{ booklore_port }}"
+    restart_policy: unless-stopped
+    state: started
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -qO- http://localhost:{{ booklore_port }}/api/v1/healthcheck || exit 1",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 6
+      start_period: 30s
+  no_log: true # Keep secret-bearing task logs redacted

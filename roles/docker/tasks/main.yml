@@ -1,0 +1,17 @@
+---
+- name: Ensure docker installed via geerlingguy.docker
+  import_role:
+    name: geerlingguy.docker
+  vars:
+    docker_users:
+      - "{{ user }}"
+
+    docker_install_compose_plugin: false
+    docker_service_state: started
+    docker_service_enabled: true
+
+- name: Configure docker-managed service directories
+  include_tasks: dirs.yml
+
+- name: Configure docker networks
+  include_tasks: networks.yml

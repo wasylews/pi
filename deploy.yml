@@ -2,98 +2,17 @@
   hosts: all
   become: true
 
-  vars:
-    pip_package: python-pip
-    pip_install_packages:
-      - name: docker
-
   vars_files:
     - group_vars/all.yml
     - group_vars/vault.yml
 
-  environment:
-    TZ: "{{ tz }}"
-    PUID: "{{ puid }}"
-    PGID: "{{ pgid }}"
-    LIBRARY_DIR: "{{ library_dir }}"
-    DOWNLOADS_DIR: "{{ downloads_dir }}"
-    CONFIG_DIR: "{{ config_dir }}"
-
-    DB_USER: "{{ booklore_db_user }}"
-    DB_PASSWORD: "{{ vault_db_password }}"
-    
-    MYSQL_DATABASE: "{{ booklore_mysql_database }}"
-    MYSQL_ROOT_PASSWORD: "{{ vault_mysql_root_password }}"
-    
-    BOOKLORE_PORT: "{{ booklore_port }}"
-    
-    APP_USER_ID: "{{ puid }}"
-    APP_GROUP_ID: "{{ pgid }}"
-    
-    DB_USER_ID: "{{ puid }}"
-    DB_GROUP_ID: "{{ pgid }}"
-    DATABASE_URL: "jdbc:mariadb://mariadb:3306/{{ booklore_mysql_database }}"
-
-    SHELFMARK_PORT: "{{ shelfmark_port }}"
-
   roles:
-    - geerlingguy.docker
-    - geerlingguy.pip
+    - docker
+    - mariadb
+    - booklore
+    - shelfmark
 
   tasks:
-    - name: Ensure library directory exists
-      ansible.builtin.file:
-        path: "{{ library_dir }}"
-        state: directory
-        mode: "0755"
-        owner: "{{ puid }}"
-        group: "{{ pgid }}"
-        recurse: true
-
-    - name: Ensure downloads directory exists
-      ansible.builtin.file:
-        path: "{{ downloads_dir }}"
-        state: directory
-        mode: "0755"
-        owner: "{{ puid }}"
-        group: "{{ pgid }}"
-        recurse: true        
-
-    - name: Ensure services directory exists
-      ansible.builtin.file:
-        path: "{{ services_dir }}"
-        state: directory
-        mode: "0755"
-
-    - name: Create books network
-      community.docker.docker_network:
-        name: books
-        state: present
-
-    - name: Copy services to host
-      ansible.builtin.copy:
-        src: services/
-        dest: "{{ services_dir }}/"
-        mode: preserve
-
-    - name: Find docker-compose files
-      ansible.builtin.find:
-        paths: "{{ services_dir }}"
-        patterns: docker-compose.yml
-        recurse: true
-      register: compose_files
-
-    - name: Deploy all services
-      community.docker.docker_compose_v2:
-        project_src: "{{ item.path | dirname }}"
-        state: present
-      loop: "{{ compose_files.files }}"
-
-    - name: Ensure services directory has correct permissions
-      ansible.builtin.file:
-        path: "{{ services_dir }}"
-        state: directory
-        mode: "0755"
-        owner: "{{ puid }}"
-        group: "{{ pgid }}"
-        recurse: true
+    - name: (roles will handle service deployment)
+      ansible.builtin.debug:
+        msg: "Services are managed by roles: mariadb, booklore, shelfmark"

@@ -1,5 +1,4 @@
 .ansible
 .vscode
-**/.env
 .vault-pass
 build

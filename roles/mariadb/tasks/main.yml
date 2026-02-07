@@ -1,0 +1,38 @@
+---
+- name: Ensure mariadb config directory exists
+  ansible.builtin.file:
+    path: "{{ config_dir }}/mariadb"
+    state: directory
+    owner: root
+    group: root
+    mode: "0750"
+
+- name: Start mariadb container
+  community.docker.docker_container:
+    name: "{{ mariadb_container_name }}"
+    image: "{{ mariadb_image }}"
+    env:
+      PUID: "{{ puid | string }}"
+      PGID: "{{ pgid | string }}"
+      TZ: "{{ tz }}"
+      MYSQL_ROOT_PASSWORD: "{{ vault_mysql_root_password }}"
+      MYSQL_DATABASE: "{{ booklore_mysql_database }}"
+      MYSQL_USER: "{{ booklore_db_user }}"
+      MYSQL_PASSWORD: "{{ vault_db_password }}"
+    volumes:
+      - "{{ config_dir }}/mariadb:/config"
+    networks:
+      - name: books
+    restart_policy: unless-stopped
+    state: started
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -u$MYSQL_USER -p$MYSQL_PASSWORD || exit 1",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 6
+      start_period: 30s
+  no_log: true

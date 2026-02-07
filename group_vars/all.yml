@@ -1,20 +1,5 @@
-# Docker installation and service management
-docker_users:
-  - wasylews
-
-docker_install_compose_plugin: true
-docker_service_state: started
-docker_service_enabled: true
-
 # Common environment variables for all services
 tz: Europe/London
 puid: 1000
 pgid: 1000
-
-# Booklore settings
-booklore_db_user: booklore
-booklore_mysql_database: booklore
-booklore_port: 3000
-
-# Shelfmark settings
-shelfmark_port: 8084
+user: wasylews

@@ -1,0 +1,8 @@
+---
+# Defaults for BookLore service
+booklore_image: booklore/booklore:latest
+booklore_container_name: booklore
+booklore_data_dir: "{{ services_dir }}/booklore/data"
+booklore_port: 3000
+booklore_db_user: booklore
+booklore_mysql_database: booklore

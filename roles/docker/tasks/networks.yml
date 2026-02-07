@@ -1,0 +1,5 @@
+---
+- name: Ensure books docker network exists
+  community.docker.docker_network:
+    name: books
+    state: present
