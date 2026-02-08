@@ -31,13 +31,13 @@
       DATABASE_USERNAME: "{{ booklore_db_user | string }}"
       DATABASE_PASSWORD: "{{ vault_db_password | string }}"
     networks:
-      - name: books
+      - name: proxy
     volumes:
       - "{{ services_dir }}/booklore/data:/app/data"
       - "{{ library_dir }}:/books"
       - "{{ downloads_dir }}:/bookdrop"
-    ports:
-      - "{{ booklore_port }}:{{ booklore_port }}"
+    expose:
+      - "{{ booklore_port }}"
     restart_policy: unless-stopped
     state: started
     healthcheck:

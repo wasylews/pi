@@ -2,9 +2,9 @@ all:
   children:
     pi:
       hosts:
-        192.168.0.112: {}
+        pi.local: {}
       vars:
-        services_dir: /home/wasylews/services
-        library_dir: /home/wasylews/library
-        downloads_dir: /home/wasylews/bookdrop
-        config_dir: /home/wasylews/services/config
+        services_dir: "{{ ansible_facts['env'].HOME }}/services"
+        library_dir: "{{ ansible_facts['env'].HOME }}/library"
+        downloads_dir: "{{ ansible_facts['env'].HOME }}/bookdrop"
+        config_dir: "{{ ansible_facts['env'].HOME }}/services/config"

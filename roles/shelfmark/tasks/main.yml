@@ -27,10 +27,10 @@
     name: "{{ shelfmark_container_name }}"
     image: "{{ shelfmark_image }}"
     env_file: "{{ services_dir }}/shelfmark/.env"
-    ports:
-      - "{{ shelfmark_port }}:{{ shelfmark_port }}"
+    expose:
+      - "{{ shelfmark_port }}"
     networks:
-      - name: books
+      - name: proxy
     restart_policy: unless-stopped
     volumes:
       - "{{ downloads_dir }}:/books"

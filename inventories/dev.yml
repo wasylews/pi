@@ -9,3 +9,4 @@ all:
         downloads_dir: "{{ playbook_dir }}/build/bookdrop"
         services_dir: "{{ playbook_dir }}/build/services"
         config_dir: "{{ playbook_dir }}/build/services/config"
+        

@@ -1,5 +1,5 @@
 # Common environment variables for all services
-tz: Europe/London
+timezone: Europe/London
 puid: 1000
 pgid: 1000
 user: wasylews

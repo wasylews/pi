@@ -3,8 +3,8 @@
   ansible.builtin.file:
     path: "{{ config_dir }}/mariadb"
     state: directory
-    owner: root
-    group: root
+    owner: "{{ puid }}"
+    group: "{{ pgid }}"
     mode: "0750"
 
 - name: Start mariadb container
@@ -14,15 +14,17 @@
     env:
       PUID: "{{ puid | string }}"
       PGID: "{{ pgid | string }}"
-      TZ: "{{ tz }}"
+      TZ: "{{ timezone }}"
       MYSQL_ROOT_PASSWORD: "{{ vault_mysql_root_password }}"
       MYSQL_DATABASE: "{{ booklore_mysql_database }}"
       MYSQL_USER: "{{ booklore_db_user }}"
       MYSQL_PASSWORD: "{{ vault_db_password }}"
     volumes:
       - "{{ config_dir }}/mariadb:/config"
+    expose:
+      - "{{ mariadb_port }}"
     networks:
-      - name: books
+      - name: proxy
     restart_policy: unless-stopped
     state: started
     healthcheck:

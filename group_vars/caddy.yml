@@ -1,0 +1,16 @@
+caddy_create_networks: true
+caddy_container_networks:
+  - name: proxy
+
+caddy_container_labels:
+  {
+    "caddy_99": "booklore.{{ inventory_hostname }}",
+    "caddy_99.reverse_proxy": "booklore:{{ booklore_port }}",
+
+    "caddy_100": "shelfmark.{{ inventory_hostname }}",
+    "caddy_100.reverse_proxy": "shelfmark:{{ shelfmark_port }}",
+  }
+
+caddy_host_dir: "{{ config_dir }}/caddy"
+caddy_host_user: "{{ user }}"
+caddy_host_group: "{{ user }}"

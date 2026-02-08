@@ -1,5 +1,4 @@
 ---
-- name: Ensure books docker network exists
-  community.docker.docker_network:
-    name: books
-    state: present
+- name: Ensure reverse proxy setup
+  import_role:
+    name: obvionaoe.caddy
