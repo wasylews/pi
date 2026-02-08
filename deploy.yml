@@ -1,9 +1,9 @@
 - name: Bootstrap Raspberry Pi and deploy services
   hosts: all
-  become: true
 
   vars_files:
     - group_vars/all.yml
+    - group_vars/caddy.yml
     - group_vars/vault.yml
 
   roles:
@@ -15,4 +15,4 @@
   tasks:
     - name: (roles will handle service deployment)
       ansible.builtin.debug:
-        msg: "Services are managed by roles: mariadb, booklore, shelfmark"
+        msg: "Services deployed on {{ inventory_hostname }}"
