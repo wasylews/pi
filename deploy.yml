@@ -11,6 +11,7 @@
     - mariadb
     - booklore
     - shelfmark
+    - adguardhome
 
   tasks:
     - name: (roles will handle service deployment)

@@ -1,0 +1,42 @@
+---
+- name: Ensure adguard config directory exists
+  ansible.builtin.file:
+    path: "{{ adguard_config_dir }}"
+    state: directory
+    owner: "{{ puid }}"
+    group: "{{ pgid }}"
+    mode: "0750"
+
+- name: Render adguard config file
+  ansible.builtin.template:
+    src: templates/adguard.yml.j2
+    dest: "{{ adguard_config_dir }}/AdGuardHome.yaml"
+    owner: "{{ puid }}"
+    group: "{{ pgid }}"
+    mode: "0750"
+  tags: config
+
+- name: Ensure adguard work directory exists
+  ansible.builtin.file:
+    path: "{{ adguard_work_dir }}"
+    state: directory
+    owner: "{{ puid }}"
+    group: "{{ pgid }}"
+    mode: "0700"
+
+- name: Start AdguardHome container
+  community.docker.docker_container:
+    name: "{{ adguard_container_name }}"
+    image: "{{ adguard_image }}"
+    volumes:
+      - "{{ adguard_config_dir }}:/opt/adguardhome/conf"
+      - "{{ adguard_work_dir }}:/opt/adguardhome/work"
+    restart_policy: unless-stopped
+    networks:
+      - name: proxy
+    state: started
+    expose:
+      - 80
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"

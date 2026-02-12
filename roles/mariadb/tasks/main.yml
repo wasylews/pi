@@ -20,7 +20,7 @@
       MYSQL_USER: "{{ booklore_db_user }}"
       MYSQL_PASSWORD: "{{ vault_db_password }}"
     volumes:
-      - "{{ config_dir }}/mariadb:/config"
+      - "{{ mariadb_config_dir }}:/config"
     expose:
       - "{{ mariadb_port }}"
     networks:

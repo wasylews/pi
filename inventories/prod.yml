@@ -2,7 +2,8 @@ all:
   children:
     pi:
       hosts:
-        pi.local: {}
+        pi.lan:
+          ansible_host: 192.168.0.112
       vars:
         services_dir: "{{ ansible_facts['env'].HOME }}/services"
         library_dir: "{{ ansible_facts['env'].HOME }}/library"

@@ -1,0 +1,7 @@
+---
+# Defaults for AdguardHome service
+adguard_image: adguard/adguardhome:latest
+adguard_config_dir: "{{ config_dir }}/adguard"
+adguard_work_dir: "{{ services_dir }}/adguard"
+adguard_container_name: adguard
+adguard_port: 80

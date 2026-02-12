@@ -2,7 +2,7 @@ all:
   children:
     dev:
       hosts:
-        localhost:
+        home.lan:
           ansible_connection: local
       vars:
         library_dir: "{{ playbook_dir }}/build/library"
