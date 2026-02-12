@@ -1,0 +1,5 @@
+---
+# Sensitive credentials - encrypt this file with: ansible-vault encrypt group_vars/vault.yml
+vault_db_password: ""
+vault_mysql_root_password: ""
+adguard_password: ""

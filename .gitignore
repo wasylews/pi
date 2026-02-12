@@ -1,4 +1,5 @@
 .ansible
 .vscode
 .vault-pass
+group_vars/vault.yml
 build
