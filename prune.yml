@@ -1,0 +1,15 @@
+- name: Prune docker containers
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Get running containers
+      community.docker.docker_host_info:
+        containers: true
+      register: running_containers
+
+    - name: Prune all containers
+      community.docker.docker_container:
+        name: "{{ item.Names[0] }}"
+        state: absent
+      loop: "{{ running_containers.containers }}"

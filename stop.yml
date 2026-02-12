@@ -1,4 +1,4 @@
-- name: Cleanup Docker containers
+- name: Stop docker containers
   hosts: all
   gather_facts: false
 
