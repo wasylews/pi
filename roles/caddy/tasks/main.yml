@@ -1,6 +1,6 @@
 ---
 - name: Ensure reverse proxy setup
-  import_role:
+  ansible.builtin.import_role:
     name: obvionaoe.caddy
   vars:
     caddy_host_dir: "{{ caddy.config_dir }}"
