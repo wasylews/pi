@@ -1,5 +1,10 @@
 ---
-# Sensitive credentials - encrypt this file with: ansible-vault encrypt group_vars/vault.yml
-vault_db_password: ""
-vault_mysql_root_password: ""
-adguard_password: ""
+# Sensitive credentials (example). Replace keys then encrypt the real file:
+# 1) copy this file to `group_vars/vault.yml`
+# 2) edit secrets and run `ansible-vault encrypt group_vars/vault.yml`
+secrets:
+  db:
+    password: ""
+    root_password: ""
+  adguard:
+    password: ""

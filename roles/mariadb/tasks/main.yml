@@ -1,7 +1,7 @@
 ---
 - name: Ensure mariadb config directory exists
   ansible.builtin.file:
-    path: "{{ config_dir }}/mariadb"
+    path: "{{ mariadb.config_dir }}"
     state: directory
     owner: "{{ puid }}"
     group: "{{ pgid }}"
@@ -9,20 +9,20 @@
 
 - name: Start mariadb container
   community.docker.docker_container:
-    name: "{{ mariadb_container_name }}"
-    image: "{{ mariadb_image }}"
+    name: "{{ mariadb.container_name }}"
+    image: "{{ mariadb.image }}"
     env:
       PUID: "{{ puid | string }}"
       PGID: "{{ pgid | string }}"
       TZ: "{{ timezone }}"
-      MYSQL_ROOT_PASSWORD: "{{ vault_mysql_root_password }}"
-      MYSQL_DATABASE: "{{ booklore_mysql_database }}"
-      MYSQL_USER: "{{ booklore_db_user }}"
-      MYSQL_PASSWORD: "{{ vault_db_password }}"
+      MYSQL_ROOT_PASSWORD: "{{ secrets.db.root_password }}"
+      MYSQL_DATABASE: "{{ mariadb.db.name }}"
+      MYSQL_USER: "{{ mariadb.db.user }}"
+      MYSQL_PASSWORD: "{{ secrets.db.password }}"
     volumes:
-      - "{{ mariadb_config_dir }}:/config"
+      - "{{ mariadb.config_dir }}:/config"
     expose:
-      - "{{ mariadb_port }}"
+      - "{{ mariadb.port }}"
     networks:
       - name: proxy
     restart_policy: unless-stopped

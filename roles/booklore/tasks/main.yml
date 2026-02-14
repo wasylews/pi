@@ -24,12 +24,12 @@
 
 - name: Start booklore container
   community.docker.docker_container:
-    name: "{{ booklore_container_name }}"
-    image: "{{ booklore_image }}"
+    name: "{{ booklore.container_name }}"
+    image: "{{ booklore.image }}"
     env_file: "{{ services_dir }}/booklore/.env"
     env:
-      DATABASE_USERNAME: "{{ booklore_db_user | string }}"
-      DATABASE_PASSWORD: "{{ vault_db_password | string }}"
+      DATABASE_USERNAME: "{{ mariadb.db.user | string }}"
+      DATABASE_PASSWORD: "{{ secrets.db.password | string }}"
     networks:
       - name: proxy
     volumes:
@@ -37,14 +37,14 @@
       - "{{ library_dir }}:/books"
       - "{{ downloads_dir }}:/bookdrop"
     expose:
-      - "{{ booklore_port }}"
+      - "{{ booklore.port }}"
     restart_policy: unless-stopped
     state: started
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "wget -qO- http://localhost:{{ booklore_port }}/api/v1/healthcheck || exit 1",
+          "wget -qO- http://localhost:{{ booklore.port }}/api/v1/healthcheck || exit 1",
         ]
       interval: 30s
       timeout: 10s

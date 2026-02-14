@@ -6,7 +6,7 @@ http:
   session_ttl: 720h
 users:
   - name: {{ user }}
-    password: {{ adguard_password }}
+    password: {{ secrets.adguard.password }}
 auth_attempts: 5
 block_auth_min: 15
 http_proxy: ""
@@ -153,7 +153,7 @@ filtering:
       answer: '{{ ansible_host }}'
       enabled: true
   safe_fs_patterns:
-    - {{ adguard_work_dir }}/userfilters/*
+    - {{ adguard.work_dir }}/userfilters/*
   safebrowsing_cache_size: 1048576
   safesearch_cache_size: 1048576
   parental_cache_size: 1048576

@@ -1,8 +1,10 @@
 ---
-# Defaults for MariaDB service, mostly used by BookLore but can be shared with other services if needed 
-booklore_mysql_database: booklore
-booklore_db_user: booklore
-mariadb_image: lscr.io/linuxserver/mariadb:11.4.5
-mariadb_config_dir: "{{ config_dir }}/mariadb"
-mariadb_container_name: mariadb
-mariadb_port: 3306
+# Defaults for MariaDB service
+mariadb:
+  image: lscr.io/linuxserver/mariadb:11.4.5
+  container_name: mariadb
+  config_dir: "{{ config_dir }}/mariadb"
+  port: 3306
+  db:
+    name: booklore
+    user: booklore

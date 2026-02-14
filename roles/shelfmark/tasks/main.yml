@@ -24,11 +24,11 @@
 
 - name: Start shelfmark container
   community.docker.docker_container:
-    name: "{{ shelfmark_container_name }}"
-    image: "{{ shelfmark_image }}"
+    name: "{{ shelfmark.container_name }}"
+    image: "{{ shelfmark.image }}"
     env_file: "{{ services_dir }}/shelfmark/.env"
     expose:
-      - "{{ shelfmark_port }}"
+      - "{{ shelfmark.port }}"
     networks:
       - name: proxy
     restart_policy: unless-stopped
@@ -41,7 +41,7 @@
       test:
         [
           "CMD-SHELL",
-          "curl -fsS http://localhost:{{ shelfmark_port }}/api/health || exit 1",
+          "curl -fsS http://localhost:{{ shelfmark.port }}/api/health || exit 1",
         ]
       interval: 30s
       timeout: 10s

@@ -2,19 +2,20 @@ caddy_create_networks: true
 caddy_container_networks:
   - name: proxy
 
-caddy_container_labels: {
-    "caddy": "*.{{ inventory_hostname }}",
-    "caddy.tls": "internal",
-
+caddy_container_labels:
+  {
     "caddy_98": "adguard.{{ inventory_hostname }}",
-    "caddy_98.reverse_proxy": "adguard:{{ adguard_port }}",
+    "caddy_98.reverse_proxy": "adguard:{{ adguard.port }}",
+    "caddy_98.tls": "internal",
 
     "caddy_99": "booklore.{{ inventory_hostname }}",
-    "caddy_99.reverse_proxy": "booklore:{{ booklore_port }}",
+    "caddy_99.reverse_proxy": "booklore:{{ booklore.port }}",
+    "caddy_99.tls": "internal",
 
     "caddy_100": "shelfmark.{{ inventory_hostname }}",
-    "caddy_100.reverse_proxy": "shelfmark:{{ shelfmark_port }}",
-}
+    "caddy_100.reverse_proxy": "shelfmark:{{ shelfmark.port }}",
+    "caddy_100.tls": "internal",
+  }
 
 caddy_host_dir: "{{ config_dir }}/caddy"
 caddy_host_user: "{{ user }}"
