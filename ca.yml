@@ -1,0 +1,18 @@
+- name: Install root certificate from remote
+  become: true
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Fetch root certificate from remote
+      ansible.builtin.fetch:
+        src: "{{ caddy_ca_dir }}/root.crt"
+        dest: "certs/{{ inventory_hostname }}.crt"
+        flat: true
+        error_on_missing: true
+
+    - name: Notify about downloaded certificate
+      ansible.builtin.debug:
+        msg:
+          - "Root certificate for {{ inventory_hostname }} downloaded to certs/{{ inventory_hostname }}.crt."
+          - "Please add it to your trusted certificates."

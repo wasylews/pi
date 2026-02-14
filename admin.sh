@@ -14,6 +14,7 @@ Usage: $0 <command> [environment]
 Commands:
   deploy      Deploy services to the specified environment
   stop        Stop services in the specified environment
+  ca          Retrieve Caddy root certificate from the specified environment
   prune       Prune docker containers in the specified environment
   deps        Install Ansible Galaxy dependencies
 
@@ -27,6 +28,7 @@ Examples:
   $0 stop prod       # stop services on prod
   $0 prune prod      # prune docker containers on prod
   $0 deps            # install dependencies
+  $0 ca              # retrieve Caddy root certificate from dev
 EOF
 }
 
@@ -40,7 +42,7 @@ COMMAND="$1"
 ENV="${2:-$DEFAULT_ENV}"
 
 # Validate environment for commands that need it
-if [[ "$COMMAND" =~ ^(deploy|stop)$ ]]; then
+if [[ "$COMMAND" =~ ^(deploy|stop|ca)$ ]]; then
     if [[ ! " ${ENVS[*]} " =~ " ${ENV} " ]]; then
         echo "Invalid environment: $ENV"
         echo "Must be one of: ${ENVS[*]}"
@@ -64,6 +66,10 @@ case "$COMMAND" in
     deps)
         echo "Installing Ansible Galaxy dependencies..."
         ansible-galaxy install -r requirements.yml
+        ;;
+    ca)
+        echo "Retrieving Caddy certificate..."
+        ansible-playbook ca.yml -i "inventories/${ENV}.yml" --ask-become-pass
         ;;
     *)
         echo "Unknown command: $COMMAND"

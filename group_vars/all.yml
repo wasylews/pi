@@ -3,3 +3,6 @@ timezone: Europe/London
 puid: 1000
 pgid: 1000
 user: wasylews
+
+
+caddy_ca_dir: "{{ config_dir }}/caddy/data/caddy/pki/authorities/local"

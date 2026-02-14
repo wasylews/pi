@@ -3,3 +3,4 @@
 .vault-pass
 group_vars/vault.yml
 build
+certs
