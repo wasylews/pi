@@ -3,11 +3,11 @@
 
   vars_files:
     - group_vars/all.yml
-    - group_vars/caddy.yml
     - group_vars/vault.yml
 
   roles:
     - docker
+    - caddy
     - mariadb
     - booklore
     - shelfmark

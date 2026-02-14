@@ -12,6 +12,3 @@
 
 - name: Configure docker-managed service directories
   include_tasks: dirs.yml
-
-- name: Configure docker networks
-  include_tasks: networks.yml

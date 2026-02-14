@@ -1,0 +1,11 @@
+---
+- name: Ensure reverse proxy setup
+  import_role:
+    name: obvionaoe.caddy
+  vars:
+    caddy_host_dir: "{{ caddy.config_dir }}"
+    caddy_host_user: "{{ user }}"
+    caddy_host_group: "{{ user }}"
+    caddy_container_labels: "{{ caddy.labels }}"
+    caddy_container_networks:
+      - name: "{{ caddy.network }}"

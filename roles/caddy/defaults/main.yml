@@ -1,9 +1,9 @@
-caddy_create_networks: true
-caddy_container_networks:
-  - name: proxy
-
-caddy_container_labels:
-  {
+---
+# Defaults for Caddy reverse proxy
+caddy:
+  network: proxy
+  config_dir: "{{ config_dir }}/caddy"
+  labels: {
     "caddy_98": "adguard.{{ inventory_hostname }}",
     "caddy_98.reverse_proxy": "adguard:{{ adguard.port }}",
     "caddy_98.tls": "internal",
@@ -16,7 +16,3 @@ caddy_container_labels:
     "caddy_100.reverse_proxy": "shelfmark:{{ shelfmark.port }}",
     "caddy_100.tls": "internal",
   }
-
-caddy_host_dir: "{{ config_dir }}/caddy"
-caddy_host_user: "{{ user }}"
-caddy_host_group: "{{ user }}"

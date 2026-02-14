@@ -1,4 +1,0 @@
----
-- name: Ensure reverse proxy setup
-  import_role:
-    name: obvionaoe.caddy
