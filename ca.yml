@@ -1,10 +1,9 @@
 - name: Install root certificate from remote
-  become: true
   hosts: all
-  gather_facts: false
 
   tasks:
     - name: Fetch root certificate from remote
+      become: true
       ansible.builtin.fetch:
         src: "{{ caddy_ca_dir }}/root.crt"
         dest: "certs/{{ inventory_hostname }}.crt"

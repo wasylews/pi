@@ -5,7 +5,7 @@ all:
         pi.lan:
           ansible_host: 192.168.0.112
       vars:
-        services_dir: "{{ ansible_facts['env'].HOME }}/services"
-        library_dir: "{{ ansible_facts['env'].HOME }}/library"
-        downloads_dir: "{{ ansible_facts['env'].HOME }}/bookdrop"
-        config_dir: "{{ ansible_facts['env'].HOME }}/services/config"
+        services_dir: "{{ ansible_facts['user_dir'] }}/services"
+        library_dir: "{{ ansible_facts['user_dir'] }}/library"
+        downloads_dir: "{{ ansible_facts['user_dir'] }}/bookdrop"
+        config_dir: "{{ ansible_facts['user_dir'] }}/services/config"
