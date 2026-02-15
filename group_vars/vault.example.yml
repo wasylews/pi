@@ -3,8 +3,11 @@
 # 1) copy this file to `group_vars/vault.yml`
 # 2) edit secrets and run `ansible-vault encrypt group_vars/vault.yml`
 secrets:
+  # MariaDB credentials
   db:
     password: ""
     root_password: ""
-  adguard:
-    password: ""
+  # AdguardHome user password (for web interface)  
+  adguard: ""
+  # Hardcover API key (for book metadata lookup) taken from https://hardcover.app/account/api
+  hardcover: ""
