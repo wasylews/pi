@@ -2,11 +2,11 @@ all:
   children:
     dev:
       hosts:
-        home.lan:
+        home.lan: # TODO: make it work for local dev machine
           ansible_connection: local
+          ansisble_host: 127.0.0.1
       vars:
         library_dir: "{{ playbook_dir }}/build/library"
         downloads_dir: "{{ playbook_dir }}/build/bookdrop"
         services_dir: "{{ playbook_dir }}/build/services"
         config_dir: "{{ playbook_dir }}/build/services/config"
-        

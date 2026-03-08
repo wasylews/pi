@@ -1,0 +1,8 @@
+---
+# Defaults for audiobookshelf service
+audiobookshelf:
+  image: advplyr/audiobookshelf:2.32.1
+  config_dir: "{{ config_dir }}/audiobookshelf"
+  work_dir: "{{ services_dir }}/audiobookshelf"
+  container_name: audiobookshelf
+  port: 80

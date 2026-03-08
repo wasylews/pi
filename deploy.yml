@@ -6,42 +6,45 @@
     - group_vars/vault.yml
 
   pre_tasks:
-  - name: Ensure library directory exists
-    ansible.builtin.file:
-      path: "{{ library_dir }}"
-      state: directory
-      mode: "0755"
-      owner: "{{ puid }}"
-      group: "{{ pgid }}"
+    - name: Ensure library directories exist
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+        owner: "{{ puid }}"
+        group: "{{ pgid }}"
+      loop:
+        - "{{ library_dir }}"
+        - "{{ library_dir }}/ebooks"
+        - "{{ library_dir }}/audiobooks"
 
-  - name: Ensure downloads directory exists
-    ansible.builtin.file:
-      path: "{{ downloads_dir }}"
-      state: directory
-      mode: "0755"
-      owner: "{{ puid }}"
-      group: "{{ pgid }}"
+    - name: Ensure downloads directory exists
+      ansible.builtin.file:
+        path: "{{ downloads_dir }}"
+        state: directory
+        mode: "0755"
 
-  - name: Ensure services directory exists
-    ansible.builtin.file:
-      path: "{{ services_dir }}"
-      state: directory
-      mode: "0755"
+    - name: Ensure services directory exists
+      ansible.builtin.file:
+        path: "{{ services_dir }}"
+        state: directory
+        mode: "0755"
 
-  - name: Ensure config directory exists
-    ansible.builtin.file:
-      path: "{{ config_dir }}"
-      state: directory
-      mode: "0755"
+    - name: Ensure config directory exists
+      ansible.builtin.file:
+        path: "{{ config_dir }}"
+        state: directory
+        mode: "0755"
 
   roles:
     - docker
     - caddy
     - mariadb
     - booklore
+    - audiobookshelf
     - shelfmark
-    - adguardhome
     - qbittorrent
+    - adguardhome
 
   tasks:
     - name: (roles will handle service deployment)

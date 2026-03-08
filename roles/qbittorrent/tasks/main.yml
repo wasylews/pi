@@ -22,6 +22,7 @@
       PUID: "{{ puid | string }}"
       PGID: "{{ pgid | string }}" 
       TZ: "{{ timezone }}"
+      QBITTORRENTAPI_DO_NOT_VERIFY_WEBUI_CERTIFICATE: "true"
     networks:
       - name: proxy
     restart_policy: unless-stopped

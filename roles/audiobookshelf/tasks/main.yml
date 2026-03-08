@@ -1,0 +1,32 @@
+---
+- name: Ensure audiobookshelf config directory exists
+  ansible.builtin.file:
+    path: "{{ audiobookshelf.config_dir }}"
+    state: directory
+    owner: "{{ puid }}"
+    group: "{{ pgid }}"
+    mode: "0750"
+
+- name: Ensure audiobookshelf work directory exists
+  ansible.builtin.file:
+    path: "{{ audiobookshelf.work_dir }}"
+    state: directory
+    owner: "{{ puid }}"
+    group: "{{ pgid }}"
+    mode: "0700"
+
+- name: Start audiobookshelf container
+  community.docker.docker_container:
+    name: "{{ audiobookshelf.container_name }}"
+    image: "{{ audiobookshelf.image }}"
+    volumes:
+      - "{{ audiobookshelf.config_dir }}:/config"
+      - "{{ audiobookshelf.work_dir }}:/metadata"
+      - "{{ library_dir }}/audiobooks:/audiobooks"
+    restart_policy: unless-stopped
+    networks:
+      - name: proxy
+    state: started
+    pull: always
+    expose:
+      - "{{ audiobookshelf.port }}"

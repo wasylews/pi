@@ -33,7 +33,8 @@
       - name: proxy
     restart_policy: unless-stopped
     volumes:
-      - "{{ downloads_dir }}:/books"
+      - "{{ library_dir }}/ebooks:/books"
+      - "{{ library_dir }}/audiobooks:/audiobooks"
       - "{{ config_dir }}/shelfmark:/config"
       - "{{ downloads_dir }}:/downloads"
     state: started

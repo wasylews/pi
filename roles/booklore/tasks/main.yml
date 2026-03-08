@@ -34,7 +34,7 @@
       - name: proxy
     volumes:
       - "{{ services_dir }}/booklore/data:/app/data"
-      - "{{ library_dir }}:/books"
+      - "{{ library_dir }}/ebooks:/books"
       - "{{ downloads_dir }}:/bookdrop"
     expose:
       - "{{ booklore.port }}"
