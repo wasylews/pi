@@ -35,6 +35,7 @@
     networks:
       - name: proxy
     state: started
+    pull: always
     expose:
       - "{{ adguard.port }}"
     ports:

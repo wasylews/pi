@@ -2,8 +2,8 @@
 - name: Ensure docker installed via geerlingguy.docker
   ansible.builtin.import_role:
     name: geerlingguy.docker
+  become: true
   vars:
     docker_users:
       - "{{ user }}"
-
     docker_install_compose_plugin: false

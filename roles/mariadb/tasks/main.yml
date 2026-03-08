@@ -27,6 +27,7 @@
       - name: proxy
     restart_policy: unless-stopped
     state: started
+    pull: always
     healthcheck:
       test:
         [

@@ -1,6 +1,7 @@
 ---
 # Defaults for Caddy reverse proxy
 caddy:
+  image: 2.8
   network: proxy
   config_dir: "{{ config_dir }}/caddy"
   labels: {

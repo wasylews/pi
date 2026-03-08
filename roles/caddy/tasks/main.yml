@@ -3,6 +3,7 @@
   ansible.builtin.import_role:
     name: obvionaoe.caddy
   vars:
+    caddy_image_tag: "{{ caddy.image}}"
     caddy_host_dir: "{{ caddy.config_dir }}"
     caddy_host_user: "{{ user }}"
     caddy_host_group: "{{ user }}"

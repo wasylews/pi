@@ -1,7 +1,7 @@
 ---
 # Defaults for BookLore service
 booklore:
-  image: booklore/booklore:latest
+  image: booklore/booklore:v2.0.6
   container_name: booklore
   data_dir: "{{ services_dir }}/booklore/data"
   port: 3000

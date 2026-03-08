@@ -37,6 +37,7 @@
       - "{{ config_dir }}/shelfmark:/config"
       - "{{ downloads_dir }}:/downloads"
     state: started
+    pull: always
     healthcheck:
       test:
         [

@@ -1,7 +1,7 @@
 ---
 # Defaults for Shelfmark service
 shelfmark:
-  image: ghcr.io/calibrain/shelfmark-lite:dev
+  image: ghcr.io/calibrain/shelfmark-lite:1.2.0
   container_name: shelfmark
   port: 8084
 irc_server: irc.irchighway.net
