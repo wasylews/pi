@@ -1,0 +1,32 @@
+---
+- name: Ensure qbittorrent config dir exists
+  ansible.builtin.file:
+    path: "{{ config_dir }}/qbittorrent"
+    state: directory
+    owner: "{{ puid }}"
+    group: "{{ pgid }}"
+    mode: "0755"
+
+- name: Start qbittorrent container
+  community.docker.docker_container:
+    name: "{{ qbittorrent.container_name }}"
+    image: "{{ qbittorrent.image }}"
+    expose:
+      - "{{ qbittorrent.port }}"
+    ports:
+      - "6881:6881/tcp"
+      - "6881:6881/udp"
+    env:
+      QBT_LEGAL_NOTICE: "confirm"
+      QBT_VERSION: "latest"
+      PUID: "{{ puid | string }}"
+      PGID: "{{ pgid | string }}" 
+      TZ: "{{ timezone }}"
+    networks:
+      - name: proxy
+    restart_policy: unless-stopped
+    volumes:
+      - "{{ config_dir }}/qbittorrent:/config"
+      - "{{ downloads_dir }}:/downloads"
+    state: started
+    pull: always

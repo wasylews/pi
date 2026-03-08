@@ -41,6 +41,7 @@
     - booklore
     - shelfmark
     - adguardhome
+    - qbittorrent
 
   tasks:
     - name: (roles will handle service deployment)

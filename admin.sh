@@ -53,7 +53,7 @@ fi
 case "$COMMAND" in
     deploy)
         echo "Deploying to $ENV..."
-        ansible-playbook deploy.yml -i "inventories/${ENV}.yml" --vault-password-file .vault-pass
+        ansible-playbook deploy.yml -i "inventories/${ENV}.yml" --vault-password-file .vault-pass --ask-become-pass
         ;;
     stop)
         echo "Stopping services on $ENV..."

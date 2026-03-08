@@ -16,4 +16,8 @@ caddy:
     "caddy_100": "shelfmark.{{ inventory_hostname }}",
     "caddy_100.reverse_proxy": "shelfmark:{{ shelfmark.port }}",
     "caddy_100.tls": "internal",
+
+    "caddy_101": "qbittorrent.{{ inventory_hostname }}",
+    "caddy_101.reverse_proxy": "qbittorrent:{{ qbittorrent.port }}",
+    "caddy_101.tls": "internal",
   }
