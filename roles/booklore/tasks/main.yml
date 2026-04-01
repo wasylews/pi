@@ -35,7 +35,7 @@
     volumes:
       - "{{ services_dir }}/booklore/data:/app/data"
       - "{{ library_dir }}/ebooks:/books"
-      - "{{ downloads_dir }}:/bookdrop"
+      - "{{ downloads_dir }}/ebooks:/bookdrop"
     expose:
       - "{{ booklore.port }}"
     restart_policy: unless-stopped

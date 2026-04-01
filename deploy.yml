@@ -17,12 +17,18 @@
         - "{{ library_dir }}"
         - "{{ library_dir }}/ebooks"
         - "{{ library_dir }}/audiobooks"
-
-    - name: Ensure downloads directory exists
+    
+    - name: Ensure downloads directories exist
       ansible.builtin.file:
-        path: "{{ downloads_dir }}"
+        path: "{{ item }}"
         state: directory
         mode: "0755"
+        owner: "{{ puid }}"
+        group: "{{ pgid }}"
+      loop:
+        - "{{ downloads_dir }}"
+        - "{{ downloads_dir }}/ebooks"
+        - "{{ downloads_dir }}/audiobooks"
 
     - name: Ensure services directory exists
       ansible.builtin.file:
