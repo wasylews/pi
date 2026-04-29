@@ -1,7 +1,7 @@
 ---
 # Defaults for BookLore service
 booklore:
-  image: booklore/booklore:v2.1.0
+  image: ghcr.io/the-booklore/booklore:v2.2.2
   container_name: booklore
   data_dir: "{{ services_dir }}/booklore/data"
   port: 3000

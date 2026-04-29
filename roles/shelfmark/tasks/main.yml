@@ -34,8 +34,9 @@
     restart_policy: unless-stopped
     volumes:
       - "{{ config_dir }}/shelfmark:/config"
-      - "{{ downloads_dir }}/ebooks:/downloads"
-      - "{{ downloads_dir }}:/downloads"
+      # We have to use same path for torrents. See docs for more https://github.com/calibrain/shelfmark/blob/main/docs/configuration.md#torrent--usenet-setup
+      - "{{ downloads_dir }}:/downloads" 
+      - "{{ downloads_dir }}/ebooks:/books"
     state: started
     pull: always
     healthcheck:
