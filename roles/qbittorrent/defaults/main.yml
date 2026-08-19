@@ -1,6 +1,6 @@
 ---
 # Defaults for QBittorrent service
 qbittorrent:
-  image: qbittorrentofficial/qbittorrent-nox:5.1.4-2
+  image: qbittorrentofficial/qbittorrent-nox:5.2.3-1
   container_name: qbittorrent
   port: 8080

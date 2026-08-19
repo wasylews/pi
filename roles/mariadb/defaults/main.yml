@@ -1,7 +1,7 @@
 ---
 # Defaults for MariaDB service
 mariadb:
-  image: lscr.io/linuxserver/mariadb:11.4.5
+  image: lscr.io/linuxserver/mariadb:11.8.8
   container_name: mariadb
   config_dir: "{{ config_dir }}/mariadb"
   port: 3306

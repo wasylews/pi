@@ -1,7 +1,7 @@
 ---
 # Defaults for AdguardHome service
 adguard:
-  image: adguard/adguardhome:v0.107.72
+  image: adguard/adguardhome:v0.107.79
   config_dir: "{{ config_dir }}/adguard"
   work_dir: "{{ services_dir }}/adguard"
   container_name: adguard
