@@ -2,9 +2,9 @@ all:
   children:
     dev:
       hosts:
-        home.lan: # TODO: make it work for local dev machine
+        localhost: # entry point if you deploy to your own machine
           ansible_connection: local
-          ansisble_host: 127.0.0.1
+          ansible_host: 127.0.0.1
       vars:
         library_dir: "{{ playbook_dir }}/build/library"
         downloads_dir: "{{ playbook_dir }}/build/bookdrop"

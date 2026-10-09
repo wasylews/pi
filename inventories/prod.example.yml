@@ -3,7 +3,7 @@ all:
     pi:
       hosts:
         pi.lan:
-          ansible_host: 192.168.0.112
+          ansible_host: 192.168.0.X # replace with your Raspberry Pi address
       vars:
         services_dir: "{{ ansible_facts['user_dir'] }}/services"
         library_dir: "{{ ansible_facts['user_dir'] }}/library"

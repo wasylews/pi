@@ -4,3 +4,7 @@
 group_vars/vault.yml
 build
 certs
+
+# Real inventories stay local-only (like the vault); publish only the examples
+inventories/*.yml
+!inventories/*.example.yml

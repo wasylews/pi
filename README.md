@@ -21,7 +21,7 @@ Repository layout (key items)
 - `prune.yml` — Clean up unused artifacts.
 - `ca.yml` — Playbook to retrieve Caddy root certificate.
 - `roles/` — Ansible roles (adguardhome, booklore, caddy, docker, mariadb, shelfmark).
-- `inventories/` — Inventory files: `dev.yml` for local development and `prod.yml` for Raspberry Pi.
+- `inventories/` — Inventory examples: `dev.example.yml` for local development and `prod.example.yml` for Raspberry Pi. Copy them to `dev.yml` and `prod.yml` when deploying. Real inventories stay local-only, like the vault.
 - `group_vars/` — Group variables and vault variables (sensitive values referenced here). See `group_vars/vault.example.yml` for a template.
 - `build/` — Local deployment data and configuration used only for testing the `dev` environment. When deploying to dev, services are deployed into this folder. It does not contain Ansible configuration and should not be modified by hand when deploying to prod.
 - `certs/` — TLS artifacts used by services (populated by the `ca` command via `admin.sh`).
@@ -36,7 +36,7 @@ Prerequisites
 
 Quickstart (preferred)
 
-1. Inspect the inventory you plan to use: `inventories/dev.yml` (for local testing into `build/` folder) or `inventories/prod.yml` (for Raspberry Pi).
+1. Create the inventory you plan to use by copying `inventories/dev.example.yml` to `inventories/dev.yml` (for local testing into the `build/` folder) or `inventories/prod.example.yml` to `inventories/prod.yml` (for Raspberry Pi), then edit the hosts.
 2. Populate secrets: copy `group_vars/vault.example.yml` to `group_vars/vault.yml`, edit the secrets, then encrypt with `ansible-vault encrypt group_vars/vault.yml`.
 3. Create a `.vault-pass` file at the repo root with your vault password (or provide secrets via `--vault-id` or `--extra-vars`).
 4. Use the `admin.sh` wrapper to run tasks. Examples:
@@ -90,6 +90,6 @@ Where to look next
 
 - Vault example: `group_vars/vault.example.yml`
 - Vault variables: `group_vars/vault.yml` (after copying/encrypting)
-- Inventories: `inventories/dev.yml` and `inventories/prod.yml`
+- Inventories: `inventories/dev.example.yml` and `inventories/prod.example.yml`
 - Main playbook: `deploy.yml`
 - Helper and docs: `admin.sh`
